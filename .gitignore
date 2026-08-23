@@ -1,0 +1,25 @@
+# Environment & Secrets (Crucial)
+.env
+*.env
+.env.local
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# SQLite local database
+neutrace_telemetry.db
+
+# Node / Vite dependencies and builds
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# OS files
+.DS_Store
+Thumbs.db
