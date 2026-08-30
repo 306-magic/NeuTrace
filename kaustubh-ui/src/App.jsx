@@ -2,51 +2,66 @@ import React, { useState, useEffect, useRef } from 'react';
 import logoPng from './assets/logo.png'; 
 
 /* ========================================================
-   BULLETPROOF INLINE CSS (Guarantees Vercel Layout)
+   BULLETPROOF INLINE CSS (Live Animated Background & Neon UI)
    ======================================================== */
 const GlobalStyles = () => (
   <style>{`
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    .app-shell { display: flex; height: 100vh; width: 100vw; background: #0b0f19; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow: hidden; }
-    .sidebar { width: 280px; background: #111827; border-right: 1px solid #1f2937; display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0; }
+    
+    @keyframes float1 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(60px, 40px) scale(1.1); } 100% { transform: translate(0, 0) scale(1); } }
+    @keyframes float2 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-50px, 60px) scale(1.2); } 100% { transform: translate(0, 0) scale(1); } }
+    @keyframes float3 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, -50px) scale(0.9); } 100% { transform: translate(0, 0) scale(1); } }
+    @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(56,189,248,0.5); } 50% { box-shadow: 0 0 25px rgba(56,189,248,0.8); } 100% { box-shadow: 0 0 15px rgba(56,189,248,0.5); } }
+
+    body { background: #0b0f19; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow: hidden; }
+    
+    .ambient-engine { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; overflow: hidden; pointer-events: none; }
+    .mesh-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.35; }
+    .orb-azure { width: 500px; height: 500px; background: #38bdf8; top: -100px; left: 10%; animation: float1 18s infinite ease-in-out; }
+    .orb-violet { width: 450px; height: 450px; background: #8b5cf6; bottom: -50px; right: 5%; animation: float2 22s infinite ease-in-out; }
+    .orb-emerald { width: 350px; height: 350px; background: #10b981; top: 40%; left: 40%; animation: float3 25s infinite ease-in-out; }
+
+    .app-shell { display: flex; height: 100vh; width: 100vw; position: relative; z-index: 1; }
+    .sidebar { width: 280px; background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(12px); border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0; }
     .brand-section { padding: 0 20px 30px; display: flex; align-items: center; gap: 12px; }
     .brand-title { font-size: 1.2rem; font-weight: 800; color: #fff; letter-spacing: 1px; }
-    .brand-tagline { font-size: 0.75rem; color: #38bdf8; text-transform: uppercase; font-weight: 600; }
+    .brand-tagline { font-size: 0.75rem; color: #38bdf8; text-transform: uppercase; font-weight: 600; text-shadow: 0 0 10px rgba(56,189,248,0.5); }
     .nav-container { display: flex; flex-direction: column; gap: 8px; padding: 0 20px; }
     .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: transparent; border: none; color: #94a3b8; font-size: 0.9rem; font-weight: 600; border-radius: 8px; cursor: pointer; text-align: left; transition: 0.2s; }
     .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
-    .nav-item.active { background: rgba(56,189,248,0.1); color: #38bdf8; }
+    .nav-item.active { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); box-shadow: inset 0 0 10px rgba(56,189,248,0.1); }
     .nav-icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
     
-    .main-viewport { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; background: radial-gradient(circle at 50% -20%, #1e293b 0%, #0b0f19 60%); }
-    .viewport-header { font-size: 1.5rem; font-weight: bold; color: #fff; margin-bottom: 24px; }
+    .main-viewport { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; background: rgba(11, 15, 25, 0.4); }
+    .viewport-header { font-size: 1.5rem; font-weight: bold; color: #fff; margin-bottom: 24px; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
     
     .threat-grid { display: flex; gap: 20px; margin-bottom: 24px; }
-    .threat-card { flex: 1; background: #1e293b; border: 1px solid #334155; padding: 20px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: 0.2s; }
-    .threat-card:hover { border-color: #475569; }
-    .threat-card.active { border-color: #38bdf8; background: #0f172a; box-shadow: 0 0 20px rgba(56,189,248,0.15); }
-    .threat-icon-box { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; color: #38bdf8; }
+    .threat-card { flex: 1; background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: 0.3s; }
+    .threat-card:hover { border-color: rgba(56,189,248,0.5); background: rgba(30, 41, 59, 0.8); }
+    .threat-card.active { border-color: #38bdf8; background: rgba(15, 23, 42, 0.8); box-shadow: 0 0 20px rgba(56,189,248,0.3), inset 0 0 15px rgba(56,189,248,0.1); }
+    .threat-icon-box { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; color: #38bdf8; text-shadow: 0 0 10px rgba(56,189,248,0.5); }
     .threat-title { font-weight: 700; color: #fff; margin-bottom: 4px; }
     .threat-subtitle { font-size: 0.8rem; color: #94a3b8; }
     
     .workspace-layout { display: flex; gap: 20px; flex: 1; min-height: 400px; }
     .layout-col { display: flex; flex-direction: column; gap: 20px; flex: 1; }
-    .panel-container { background: #111827; border: 1px solid #334155; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .panel-top-bar { background: #0f172a; padding: 16px 20px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+    .panel-container { background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+    .panel-top-bar { background: rgba(15, 23, 42, 0.9); padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
     .panel-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: #cbd5e1; }
     .panel-body { padding: 20px; flex: 1; overflow-y: auto; }
     
     .code-textarea { width: 100%; height: 100%; background: transparent; border: none; color: #e2e8f0; font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.5; resize: none; outline: none; }
-    .action-btn { background: #38bdf8; color: #0f172a; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
-    .action-btn.primary { background: #38bdf8; color: #0f172a; }
-    .action-btn:hover:not(:disabled) { background: #7dd3fc; }
-    .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .action-btn.success { background: #10b981; color: white; }
+    
+    .action-btn { border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .action-btn.primary { background: #38bdf8; color: #0f172a; animation: pulseGlow 3s infinite; }
+    .action-btn.primary:hover:not(:disabled) { background: #7dd3fc; box-shadow: 0 0 30px rgba(56,189,248,0.9); transform: translateY(-1px); }
+    .action-btn:disabled { opacity: 0.5; cursor: not-allowed; animation: none; box-shadow: none; }
+    .action-btn.success { background: #10b981; color: #022c22; box-shadow: 0 0 20px rgba(16,185,129,0.7); }
     
     .terminal-output { font-family: 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.6; }
     .smart-diff-container { font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.6; }
     .smart-line { padding: 4px 8px; border-radius: 4px; border-left: 3px solid transparent; }
-    .smart-line.secured { background: rgba(16,185,129,0.1); border-left-color: #10b981; color: #34d399; margin: 4px 0; }
+    .smart-line.secured { background: rgba(16,185,129,0.15); border-left-color: #10b981; color: #34d399; margin: 4px 0; text-shadow: 0 0 5px rgba(52,211,153,0.3); }
   `}</style>
 );
 
@@ -54,7 +69,7 @@ const GlobalStyles = () => (
    FORTUNE 500 BRANDING & ICONS
    ======================================================== */
 const BrandLogo = () => (
-  <img src={logoPng} alt="NeuTrace Logo" width="40" height="40" style={{ borderRadius: '8px', objectFit: 'contain' }} />
+  <img src={logoPng} alt="NeuTrace Logo" width="40" height="40" style={{ borderRadius: '8px', objectFit: 'contain', boxShadow: '0 0 15px rgba(56,189,248,0.4)' }} />
 );
 
 const Icons = {
@@ -103,8 +118,10 @@ const getAgentColor = (agentName) => {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('workspace');
-  const [activeScenario, setActiveScenario] = useState(SCENARIOS.prompt_inject);
-  const [editorCode, setEditorCode] = useState(SCENARIOS.prompt_inject.code);
+  
+  // FIXED: Application now starts with completely empty states for the pitch video
+  const [activeScenario, setActiveScenario] = useState(null);
+  const [editorCode, setEditorCode] = useState('');
   
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
@@ -226,7 +243,8 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
         { agent: "DEPLOY GATE", text: "Zero-Trust policy satisfied. Cryptographic patch approved." }
       ];
       
-      if (activeScenario.id === "prompt") {
+      const scenarioId = activeScenario?.id || "custom";
+      if (scenarioId === "prompt" || editorCode.includes("genai")) {
         remediated_code = `import google.generativeai as genai\nfrom google.cloud import dlp_v2\n\ndef summarize_data(user_text):\n    # NeuTrace: Input sanitized via GCP Data Loss Prevention API\n    dlp_client = dlp_v2.DlpServiceClient()\n    sanitized_text = dlp_client.inspect_content(item={'value': user_text})\n    \n    model = genai.GenerativeModel('gemini-1.5-flash')\n    response = model.generate_content(f"Summarize this text: {sanitized_text}")\n    return response.text`;
       } else {
         remediated_code = `# NeuTrace: Vulnerability patched securely using GCP Secret Manager.\n# Credentials dynamically fetched at runtime.\n${editorCode}`;
@@ -251,6 +269,14 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
   return (
     <>
       <GlobalStyles />
+      
+      {/* THE AMBIENT ENGINE - Live Animated Mesh Background */}
+      <div className="ambient-engine">
+        <div className="mesh-orb orb-azure"></div>
+        <div className="mesh-orb orb-violet"></div>
+        <div className="mesh-orb orb-emerald"></div>
+      </div>
+
       <div className="app-shell">
         <aside className="sidebar">
           <div>
@@ -274,19 +300,19 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
             </nav>
           </div>
 
-          <div style={{ margin: '0 20px', padding: '20px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', background: 'rgba(0,0,0,0.3)' }}>
+          <div style={{ margin: '0 20px', padding: '20px', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', background: 'rgba(0,0,0,0.4)', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.5)' }}>
             <div style={{ fontSize: '0.65rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', marginBottom: '16px' }}>Active ADK Agents</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#8b5cf6' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#8b5cf6', textShadow: '0 0 10px rgba(139,92,246,0.5)' }}>
                 <Icons.Radar /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Scanner</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#3b82f6' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#3b82f6', textShadow: '0 0 10px rgba(59,130,246,0.5)' }}>
                 <Icons.AgentShield /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Blue Team</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#ef4444' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#ef4444', textShadow: '0 0 10px rgba(239,68,68,0.5)' }}>
                 <Icons.Crosshair /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Red Team</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#10b981' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#10b981', textShadow: '0 0 10px rgba(16,185,129,0.5)' }}>
                 <Icons.Lock /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Deploy Gate</span>
               </div>
             </div>
@@ -325,7 +351,7 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
                       </button>
                     </div>
                     <div className="panel-body">
-                      <textarea className="code-textarea" value={editorCode} onChange={(e) => setEditorCode(e.target.value)} spellCheck="false" placeholder="Paste target code..."/>
+                      <textarea className="code-textarea" value={editorCode} onChange={(e) => setEditorCode(e.target.value)} spellCheck="false" placeholder="Paste target code to begin adversarial simulation..."/>
                     </div>
                   </div>
 
@@ -375,17 +401,17 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
               </div>
               <div className="panel-body">
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '32px' }}>
-                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.05)' }}>
                     <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Total Pipelines Audited</div>
                     <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#fff' }}>1,204</div>
                   </div>
-                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.05)' }}>
                     <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Red Team Bypasses</div>
-                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#10b981' }}>0</div>
+                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#10b981', textShadow: '0 0 10px rgba(16,185,129,0.5)' }}>0</div>
                   </div>
-                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.05)' }}>
                     <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Fleet Compliance Status</div>
-                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#38bdf8' }}>100% SECURE</div>
+                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#38bdf8', textShadow: '0 0 10px rgba(56,189,248,0.5)' }}>100% SECURE</div>
                   </div>
                 </div>
 
@@ -453,7 +479,8 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
                       onClick={() => togglePolicy(policy.key)}
                       style={{
                         width: '44px', height: '24px', borderRadius: '12px', cursor: 'pointer', position: 'relative', transition: 'all 0.3s', flexShrink: 0,
-                        background: policies[policy.key] ? '#38bdf8' : 'rgba(255,255,255,0.1)'
+                        background: policies[policy.key] ? '#38bdf8' : 'rgba(255,255,255,0.1)',
+                        boxShadow: policies[policy.key] ? '0 0 10px rgba(56,189,248,0.5)' : 'none'
                       }}
                     >
                       <div style={{
