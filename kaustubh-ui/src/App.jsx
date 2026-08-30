@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 /* ========================================================
-   BULLETPROOF INLINE CSS (True Black Glassmorphism & Cyber Neon)
+   BULLETPROOF INLINE CSS (Harmonized Blue Spectrum & Glass)
    ======================================================== */
 const GlobalStyles = () => (
   <style>{`
@@ -12,19 +12,19 @@ const GlobalStyles = () => (
     @keyframes float3 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(3vw, -5vh) scale(0.9); } 100% { transform: translate(0, 0) scale(1); } }
     @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(0,229,255,0.5); } 50% { box-shadow: 0 0 30px rgba(0,229,255,0.9); } 100% { box-shadow: 0 0 15px rgba(0,229,255,0.5); } }
 
-    /* True Black Background for maximum neon contrast */
-    body { background: #000000; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow: hidden; }
+    /* Deep Cyber Black Background */
+    body { background: #020617; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow: hidden; }
     
     .ambient-engine { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; overflow: hidden; pointer-events: none; }
-    .mesh-orb { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.4; }
+    .mesh-orb { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.45; }
     .orb-azure { width: 70vw; height: 70vw; background: #00e5ff; top: -30%; left: -20%; animation: float1 25s infinite ease-in-out alternate; }
-    .orb-violet { width: 60vw; height: 60vw; background: #d500f9; bottom: -20%; right: -15%; animation: float2 30s infinite ease-in-out alternate; }
-    .orb-emerald { width: 50vw; height: 50vw; background: #00e676; top: 15%; left: 35%; animation: float3 35s infinite ease-in-out alternate; }
+    .orb-cobalt { width: 65vw; height: 65vw; background: #1d4ed8; bottom: -20%; right: -15%; animation: float2 30s infinite ease-in-out alternate; }
+    .orb-midnight { width: 55vw; height: 55vw; background: #0369a1; top: 20%; left: 30%; animation: float3 35s infinite ease-in-out alternate; }
 
     .app-shell { display: flex; height: 100vh; width: 100vw; position: relative; z-index: 1; }
     
     /* PURE TRANSPARENT GLASS UI */
-    .sidebar { width: 280px; background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0; }
+    .sidebar { width: 280px; background: rgba(2, 6, 23, 0.4); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0; }
     .brand-section { padding: 0 20px 30px; display: flex; align-items: center; gap: 16px; }
     .brand-title { font-size: 1.3rem; font-weight: 900; color: #ffffff; letter-spacing: 1.5px; text-shadow: 0 0 15px rgba(255,255,255,0.4); }
     .brand-tagline { font-size: 0.7rem; color: #00e5ff; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,229,255,0.8); }
@@ -39,34 +39,34 @@ const GlobalStyles = () => (
     .viewport-header { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 24px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); letter-spacing: 0.5px; }
     
     .threat-grid { display: flex; gap: 20px; margin-bottom: 24px; }
-    .threat-card { flex: 1; background: rgba(15, 15, 15, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .threat-card:hover { border-color: rgba(0,229,255,0.6); background: rgba(20, 20, 20, 0.6); transform: translateY(-2px); }
-    .threat-card.active { border-color: #00e5ff; background: rgba(20, 20, 20, 0.8); box-shadow: 0 0 25px rgba(0,229,255,0.3), inset 0 0 20px rgba(0,229,255,0.15); }
-    .threat-icon-box { background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; color: #00e5ff; box-shadow: inset 0 0 10px rgba(0,229,255,0.3); }
+    .threat-card { flex: 1; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    .threat-card:hover { border-color: rgba(0,229,255,0.6); background: rgba(15, 23, 42, 0.6); transform: translateY(-2px); }
+    .threat-card.active { border-color: #00e5ff; background: rgba(15, 23, 42, 0.8); box-shadow: 0 0 25px rgba(0,229,255,0.3), inset 0 0 20px rgba(0,229,255,0.15); }
+    .threat-icon-box { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; color: #00e5ff; box-shadow: inset 0 0 10px rgba(0,229,255,0.3); }
     .threat-title { font-weight: 700; color: #fff; margin-bottom: 4px; font-size: 0.95rem; }
     .threat-subtitle { font-size: 0.8rem; color: #94a3b8; }
     
     .workspace-layout { display: flex; gap: 20px; flex: 1; min-height: 400px; }
     .layout-col { display: flex; flex-direction: column; gap: 20px; flex: 1; }
     
-    .panel-container { background: rgba(15, 15, 15, 0.5); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
-    .panel-top-bar { background: rgba(5, 5, 5, 0.6); padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
+    .panel-container { background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+    .panel-top-bar { background: rgba(2, 6, 23, 0.6); padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; }
     .panel-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; color: #e2e8f0; }
     .panel-body { padding: 20px; flex: 1; overflow-y: auto; }
     
     .code-textarea { width: 100%; height: 100%; background: transparent; border: none; color: #e2e8f0; font-family: 'Fira Code', monospace; font-size: 0.95rem; line-height: 1.6; resize: none; outline: none; }
-    .code-textarea::placeholder { color: #64748b; font-style: italic; }
+    .code-textarea::placeholder { color: #475569; font-style: italic; }
     
     .action-btn { border: none; padding: 10px 22px; border-radius: 6px; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .action-btn.primary { background: #00e5ff; color: #000000; animation: pulseGlow 3s infinite; }
+    .action-btn.primary { background: #00e5ff; color: #020617; animation: pulseGlow 3s infinite; }
     .action-btn.primary:hover:not(:disabled) { background: #84ffff; box-shadow: 0 0 30px rgba(0,229,255,0.9); transform: translateY(-1px); }
     .action-btn:disabled { opacity: 0.4; cursor: not-allowed; animation: none; box-shadow: none; }
-    .action-btn.success { background: #00e676; color: #000000; box-shadow: 0 0 20px rgba(0,230,118,0.8); }
+    .action-btn.success { background: #38bdf8; color: #020617; box-shadow: 0 0 20px rgba(56,189,248,0.8); }
     
     .terminal-output { font-family: 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.7; }
     .smart-diff-container { font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.6; }
     .smart-line { padding: 4px 8px; border-radius: 4px; border-left: 3px solid transparent; }
-    .smart-line.secured { background: rgba(0,230,118,0.15); border-left-color: #00e676; color: #69f0ae; margin: 4px 0; text-shadow: 0 0 5px rgba(0,230,118,0.4); }
+    .smart-line.secured { background: rgba(0,229,255,0.12); border-left-color: #00e5ff; color: #67e8f9; margin: 4px 0; text-shadow: 0 0 5px rgba(0,229,255,0.4); }
   `}</style>
 );
 
@@ -75,7 +75,7 @@ const GlobalStyles = () => (
    ======================================================== */
 const BrandLogo = () => (
   <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: 'drop-shadow(0px 0px 12px rgba(0,229,255,0.8))' }}>
-    <rect width="100" height="100" rx="20" fill="rgba(0,0,0,0.8)" stroke="#00e5ff" strokeWidth="4"/>
+    <rect width="100" height="100" rx="20" fill="rgba(2,6,23,0.8)" stroke="#00e5ff" strokeWidth="4"/>
     <path d="M30 70 V30 L70 70 V30" stroke="#00e5ff" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
@@ -117,10 +117,10 @@ const SCENARIOS = {
 const getAgentColor = (agentName) => {
   if (!agentName) return '#94a3b8';
   const name = agentName.toUpperCase();
-  if (name.includes('SCANNER')) return '#d500f9';
-  if (name.includes('BLUE')) return '#00b0ff';
+  if (name.includes('SCANNER')) return '#38bdf8';
+  if (name.includes('BLUE')) return '#00e5ff';
   if (name.includes('RED')) return '#ff1744';
-  if (name.includes('GATE') || name.includes('DEPLOY')) return '#00e676';
+  if (name.includes('GATE') || name.includes('DEPLOY')) return '#0ea5e9';
   return '#94a3b8';
 };
 
@@ -278,11 +278,11 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
     <>
       <GlobalStyles />
       
-      {/* THE AMBIENT ENGINE - Live Animated Mesh Background */}
+      {/* THE AMBIENT ENGINE - Harmonized Blue Spectrum Mesh */}
       <div className="ambient-engine">
         <div className="mesh-orb orb-azure"></div>
-        <div className="mesh-orb orb-violet"></div>
-        <div className="mesh-orb orb-emerald"></div>
+        <div className="mesh-orb orb-cobalt"></div>
+        <div className="mesh-orb orb-midnight"></div>
       </div>
 
       <div className="app-shell">
@@ -308,19 +308,19 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
             </nav>
           </div>
 
-          <div style={{ margin: '0 20px', padding: '20px', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px', background: 'rgba(0,0,0,0.5)', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.6)' }}>
+          <div style={{ margin: '0 20px', padding: '20px', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', background: 'rgba(2,6,23,0.5)', boxShadow: 'inset 0 0 20px rgba(0,229,255,0.08)' }}>
             <div style={{ fontSize: '0.65rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', marginBottom: '16px' }}>Active ADK Agents</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#d500f9', textShadow: '0 0 10px rgba(213,0,249,0.7)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#38bdf8', textShadow: '0 0 10px rgba(56,189,248,0.7)' }}>
                 <Icons.Radar /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Scanner</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#00b0ff', textShadow: '0 0 10px rgba(0,176,255,0.7)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#00e5ff', textShadow: '0 0 10px rgba(0,229,255,0.7)' }}>
                 <Icons.AgentShield /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Blue Team</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#ff1744', textShadow: '0 0 10px rgba(255,23,68,0.7)' }}>
                 <Icons.Crosshair /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Red Team</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#00e676', textShadow: '0 0 10px rgba(0,230,118,0.7)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#0ea5e9', textShadow: '0 0 10px rgba(14,165,233,0.7)' }}>
                 <Icons.Lock /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Deploy Gate</span>
               </div>
             </div>
@@ -359,7 +359,6 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
                       </button>
                     </div>
                     <div className="panel-body">
-                      {/* NEW PLACEHOLDER LOGIC */}
                       <textarea 
                         className="code-textarea" 
                         value={editorCode} 
@@ -416,17 +415,17 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
               </div>
               <div className="panel-body">
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '32px' }}>
-                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(2,6,23,0.5)', border: '1px solid rgba(255,255,255,0.06)' }}>
                     <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Total Pipelines Audited</div>
                     <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#fff' }}>1,204</div>
                   </div>
-                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(2,6,23,0.5)', border: '1px solid rgba(255,255,255,0.06)' }}>
                     <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Red Team Bypasses</div>
-                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#00e676', textShadow: '0 0 10px rgba(0,230,118,0.5)' }}>0</div>
+                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#00e5ff', textShadow: '0 0 10px rgba(0,229,255,0.5)' }}>0</div>
                   </div>
-                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(2,6,23,0.5)', border: '1px solid rgba(255,255,255,0.06)' }}>
                     <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Fleet Compliance Status</div>
-                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#00e5ff', textShadow: '0 0 10px rgba(0,229,255,0.5)' }}>100% SECURE</div>
+                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#38bdf8', textShadow: '0 0 10px rgba(56,189,248,0.5)' }}>100% SECURE</div>
                   </div>
                 </div>
 
@@ -455,7 +454,7 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
                           <span style={{ padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold', background: `${row.color}22`, color: row.color, border: `1px solid ${row.color}55` }}>{row.severity}</span>
                         </td>
                         <td style={{ padding: '16px' }}>
-                          <span style={{ padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold', background: 'rgba(0, 230, 118, 0.15)', color: '#00e676', border: '1px solid rgba(0, 230, 118, 0.3)' }}>PATCHED VIA ADK</span>
+                          <span style={{ padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold', background: 'rgba(0, 229, 255, 0.15)', color: '#00e5ff', border: '1px solid rgba(0, 229, 255, 0.3)' }}>PATCHED VIA ADK</span>
                         </td>
                       </tr>
                     ))}
@@ -484,7 +483,7 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
                   { key: 'redMaxAggression', group: 'NODE 3: RED TEAM', title: 'Maximum Penetration (3-Pass Rule)', desc: 'Require Red Team agent to execute three distinct bypass methodologies before approving the patch.' },
                   { key: 'gateHumanReview', group: 'NODE 4: DEPLOY GATE', title: 'Require CISO Manual Sign-Off', desc: 'Halt the pipeline at Node 4 for manual approval if the initial vulnerability is tagged as CRITICAL.' }
                 ].map((policy) => (
-                  <div key={policy.key} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px' }}>
+                  <div key={policy.key} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px', background: 'rgba(2,6,23,0.3)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px' }}>
                     <div style={{ paddingRight: '20px' }}>
                       <span style={{ fontSize: '0.65rem', color: '#00e5ff', letterSpacing: '1px', fontWeight: 'bold' }}>{policy.group}</span>
                       <h3 style={{ color: '#fff', fontSize: '1rem', marginTop: '6px', marginBottom: '4px' }}>{policy.title}</h3>
@@ -499,7 +498,7 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
                       }}
                     >
                       <div style={{
-                        width: '18px', height: '18px', borderRadius: '50%', background: '#000', position: 'absolute', top: '3px', transition: 'all 0.3s',
+                        width: '18px', height: '18px', borderRadius: '50%', background: '#020617', position: 'absolute', top: '3px', transition: 'all 0.3s',
                         left: policies[policy.key] ? '23px' : '3px'
                       }}/>
                     </div>
