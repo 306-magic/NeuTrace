@@ -1,64 +1,67 @@
 import React, { useState, useEffect, useRef } from 'react';
-import logoPng from './assets/logo.png'; 
 
 /* ========================================================
-   BULLETPROOF INLINE CSS (Live Animated Background & Neon UI)
+   BULLETPROOF INLINE CSS (Ultra-Glassmorphism & Cinematic Background)
    ======================================================== */
 const GlobalStyles = () => (
   <style>{`
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    @keyframes float1 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(60px, 40px) scale(1.1); } 100% { transform: translate(0, 0) scale(1); } }
-    @keyframes float2 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-50px, 60px) scale(1.2); } 100% { transform: translate(0, 0) scale(1); } }
-    @keyframes float3 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, -50px) scale(0.9); } 100% { transform: translate(0, 0) scale(1); } }
-    @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(56,189,248,0.5); } 50% { box-shadow: 0 0 25px rgba(56,189,248,0.8); } 100% { box-shadow: 0 0 15px rgba(56,189,248,0.5); } }
+    @keyframes float1 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(5vw, 5vh) scale(1.1); } 100% { transform: translate(0, 0) scale(1); } }
+    @keyframes float2 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-4vw, 6vh) scale(1.2); } 100% { transform: translate(0, 0) scale(1); } }
+    @keyframes float3 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(3vw, -5vh) scale(0.9); } 100% { transform: translate(0, 0) scale(1); } }
+    @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(56,189,248,0.5); } 50% { box-shadow: 0 0 25px rgba(56,189,248,0.9); } 100% { box-shadow: 0 0 15px rgba(56,189,248,0.5); } }
 
-    body { background: #0b0f19; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow: hidden; }
+    body { background: #070a11; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow: hidden; }
     
     .ambient-engine { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; overflow: hidden; pointer-events: none; }
-    .mesh-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.35; }
-    .orb-azure { width: 500px; height: 500px; background: #38bdf8; top: -100px; left: 10%; animation: float1 18s infinite ease-in-out; }
-    .orb-violet { width: 450px; height: 450px; background: #8b5cf6; bottom: -50px; right: 5%; animation: float2 22s infinite ease-in-out; }
-    .orb-emerald { width: 350px; height: 350px; background: #10b981; top: 40%; left: 40%; animation: float3 25s infinite ease-in-out; }
+    .mesh-orb { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.35; }
+    .orb-azure { width: 70vw; height: 70vw; background: #38bdf8; top: -30%; left: -20%; animation: float1 25s infinite ease-in-out alternate; }
+    .orb-violet { width: 60vw; height: 60vw; background: #8b5cf6; bottom: -20%; right: -15%; animation: float2 30s infinite ease-in-out alternate; }
+    .orb-emerald { width: 50vw; height: 50vw; background: #10b981; top: 15%; left: 35%; animation: float3 35s infinite ease-in-out alternate; }
 
     .app-shell { display: flex; height: 100vh; width: 100vw; position: relative; z-index: 1; }
-    .sidebar { width: 280px; background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(12px); border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0; }
-    .brand-section { padding: 0 20px 30px; display: flex; align-items: center; gap: 12px; }
-    .brand-title { font-size: 1.2rem; font-weight: 800; color: #fff; letter-spacing: 1px; }
-    .brand-tagline { font-size: 0.75rem; color: #38bdf8; text-transform: uppercase; font-weight: 600; text-shadow: 0 0 10px rgba(56,189,248,0.5); }
+    
+    /* PURE GLASS UI SETTINGS */
+    .sidebar { width: 280px; background: rgba(11, 15, 25, 0.2); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0; }
+    .brand-section { padding: 0 20px 30px; display: flex; align-items: center; gap: 16px; }
+    .brand-title { font-size: 1.3rem; font-weight: 900; color: #fff; letter-spacing: 1.5px; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+    .brand-tagline { font-size: 0.7rem; color: #38bdf8; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; text-shadow: 0 0 10px rgba(56,189,248,0.6); }
+    
     .nav-container { display: flex; flex-direction: column; gap: 8px; padding: 0 20px; }
-    .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: transparent; border: none; color: #94a3b8; font-size: 0.9rem; font-weight: 600; border-radius: 8px; cursor: pointer; text-align: left; transition: 0.2s; }
-    .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
-    .nav-item.active { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); box-shadow: inset 0 0 10px rgba(56,189,248,0.1); }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: transparent; border: none; color: #94a3b8; font-size: 0.9rem; font-weight: 600; border-radius: 8px; cursor: pointer; text-align: left; transition: 0.3s; }
+    .nav-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .nav-item.active { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); box-shadow: inset 0 0 15px rgba(56,189,248,0.15); }
     .nav-icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
     
-    .main-viewport { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; background: rgba(11, 15, 25, 0.4); }
-    .viewport-header { font-size: 1.5rem; font-weight: bold; color: #fff; margin-bottom: 24px; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+    .main-viewport { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; }
+    .viewport-header { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 24px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); letter-spacing: 0.5px; }
     
     .threat-grid { display: flex; gap: 20px; margin-bottom: 24px; }
-    .threat-card { flex: 1; background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: 0.3s; }
-    .threat-card:hover { border-color: rgba(56,189,248,0.5); background: rgba(30, 41, 59, 0.8); }
-    .threat-card.active { border-color: #38bdf8; background: rgba(15, 23, 42, 0.8); box-shadow: 0 0 20px rgba(56,189,248,0.3), inset 0 0 15px rgba(56,189,248,0.1); }
-    .threat-icon-box { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; color: #38bdf8; text-shadow: 0 0 10px rgba(56,189,248,0.5); }
-    .threat-title { font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .threat-card { flex: 1; background: rgba(15, 23, 42, 0.25); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .threat-card:hover { border-color: rgba(56,189,248,0.6); background: rgba(15, 23, 42, 0.4); transform: translateY(-2px); }
+    .threat-card.active { border-color: #38bdf8; background: rgba(15, 23, 42, 0.6); box-shadow: 0 0 25px rgba(56,189,248,0.25), inset 0 0 20px rgba(56,189,248,0.15); }
+    .threat-icon-box { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; color: #38bdf8; box-shadow: inset 0 0 10px rgba(56,189,248,0.2); }
+    .threat-title { font-weight: 700; color: #fff; margin-bottom: 4px; font-size: 0.95rem; }
     .threat-subtitle { font-size: 0.8rem; color: #94a3b8; }
     
     .workspace-layout { display: flex; gap: 20px; flex: 1; min-height: 400px; }
     .layout-col { display: flex; flex-direction: column; gap: 20px; flex: 1; }
-    .panel-container { background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-    .panel-top-bar { background: rgba(15, 23, 42, 0.9); padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
-    .panel-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: #cbd5e1; }
+    
+    .panel-container { background: rgba(15, 23, 42, 0.25); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+    .panel-top-bar { background: rgba(0, 0, 0, 0.3); padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+    .panel-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; color: #e2e8f0; }
     .panel-body { padding: 20px; flex: 1; overflow-y: auto; }
     
-    .code-textarea { width: 100%; height: 100%; background: transparent; border: none; color: #e2e8f0; font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.5; resize: none; outline: none; }
+    .code-textarea { width: 100%; height: 100%; background: transparent; border: none; color: #e2e8f0; font-family: 'Fira Code', monospace; font-size: 0.95rem; line-height: 1.6; resize: none; outline: none; }
     
-    .action-btn { border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .action-btn.primary { background: #38bdf8; color: #0f172a; animation: pulseGlow 3s infinite; }
+    .action-btn { border: none; padding: 10px 22px; border-radius: 6px; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .action-btn.primary { background: #38bdf8; color: #070a11; animation: pulseGlow 3s infinite; }
     .action-btn.primary:hover:not(:disabled) { background: #7dd3fc; box-shadow: 0 0 30px rgba(56,189,248,0.9); transform: translateY(-1px); }
-    .action-btn:disabled { opacity: 0.5; cursor: not-allowed; animation: none; box-shadow: none; }
-    .action-btn.success { background: #10b981; color: #022c22; box-shadow: 0 0 20px rgba(16,185,129,0.7); }
+    .action-btn:disabled { opacity: 0.4; cursor: not-allowed; animation: none; box-shadow: none; }
+    .action-btn.success { background: #10b981; color: #022c22; box-shadow: 0 0 20px rgba(16,185,129,0.8); }
     
-    .terminal-output { font-family: 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.6; }
+    .terminal-output { font-family: 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.7; }
     .smart-diff-container { font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.6; }
     .smart-line { padding: 4px 8px; border-radius: 4px; border-left: 3px solid transparent; }
     .smart-line.secured { background: rgba(16,185,129,0.15); border-left-color: #10b981; color: #34d399; margin: 4px 0; text-shadow: 0 0 5px rgba(52,211,153,0.3); }
@@ -66,10 +69,20 @@ const GlobalStyles = () => (
 );
 
 /* ========================================================
-   FORTUNE 500 BRANDING & ICONS
+   ENTERPRISE PURE SVG LOGO (No images required)
    ======================================================== */
 const BrandLogo = () => (
-  <img src={logoPng} alt="NeuTrace Logo" width="40" height="40" style={{ borderRadius: '8px', objectFit: 'contain', boxShadow: '0 0 15px rgba(56,189,248,0.4)' }} />
+  <svg width="48" height="48" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: 'drop-shadow(0px 0px 10px rgba(56,189,248,0.6))' }}>
+    <rect width="100" height="100" rx="22" fill="url(#grad)" stroke="rgba(255,255,255,0.1)" strokeWidth="2"/>
+    <path d="M28 72V28L72 72V28" stroke="#38bdf8" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="72" cy="28" r="6" fill="#10b981" style={{ filter: 'drop-shadow(0px 0px 8px rgba(16,185,129,0.8))' }}/>
+    <defs>
+      <linearGradient id="grad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#0f172a" />
+        <stop offset="1" stopColor="#070a11" />
+      </linearGradient>
+    </defs>
+  </svg>
 );
 
 const Icons = {
@@ -119,7 +132,7 @@ const getAgentColor = (agentName) => {
 export default function App() {
   const [activeTab, setActiveTab] = useState('workspace');
   
-  // FIXED: Application now starts with completely empty states for the pitch video
+  // SECURED: Application starts 100% empty for clean presentation demo
   const [activeScenario, setActiveScenario] = useState(null);
   const [editorCode, setEditorCode] = useState('');
   
@@ -215,7 +228,7 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
     setTimeout(() => { printWindow.print(); }, 300);
   };
 
-  // FAILOVER TRIGGER LOGIC - Guarantees demo works for Judges even if backend is offline
+  // ZERO-RISK DEMO API FAILOVER
   const triggerAnalysis = async () => {
     if (!editorCode.trim()) return;
     setIsAnalyzing(true);
@@ -300,19 +313,19 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
             </nav>
           </div>
 
-          <div style={{ margin: '0 20px', padding: '20px', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', background: 'rgba(0,0,0,0.4)', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.5)' }}>
+          <div style={{ margin: '0 20px', padding: '20px', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.4)' }}>
             <div style={{ fontSize: '0.65rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', marginBottom: '16px' }}>Active ADK Agents</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#8b5cf6', textShadow: '0 0 10px rgba(139,92,246,0.5)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#8b5cf6', textShadow: '0 0 10px rgba(139,92,246,0.6)' }}>
                 <Icons.Radar /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Scanner</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#3b82f6', textShadow: '0 0 10px rgba(59,130,246,0.5)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#3b82f6', textShadow: '0 0 10px rgba(59,130,246,0.6)' }}>
                 <Icons.AgentShield /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Blue Team</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#ef4444', textShadow: '0 0 10px rgba(239,68,68,0.5)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#ef4444', textShadow: '0 0 10px rgba(239,68,68,0.6)' }}>
                 <Icons.Crosshair /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Red Team</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#10b981', textShadow: '0 0 10px rgba(16,185,129,0.5)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#10b981', textShadow: '0 0 10px rgba(16,185,129,0.6)' }}>
                 <Icons.Lock /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Deploy Gate</span>
               </div>
             </div>
@@ -351,7 +364,8 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
                       </button>
                     </div>
                     <div className="panel-body">
-                      <textarea className="code-textarea" value={editorCode} onChange={(e) => setEditorCode(e.target.value)} spellCheck="false" placeholder="Paste target code to begin adversarial simulation..."/>
+                      {/* COMPLETELY BLANK PLACEHOLDER */}
+                      <textarea className="code-textarea" value={editorCode} onChange={(e) => setEditorCode(e.target.value)} spellCheck="false" placeholder=""/>
                     </div>
                   </div>
 
