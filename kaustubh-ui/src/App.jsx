@@ -71,11 +71,11 @@ const GlobalStyles = () => (
 );
 
 /* ========================================================
-   ENTERPRISE PURE SVG LOGO (Sleek Geometric 'N')
+   ENTERPRISE PURE SVG LOGO (Clean, No Harsh Border)
    ======================================================== */
 const BrandLogo = () => (
-  <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: 'drop-shadow(0px 0px 12px rgba(0,229,255,0.8))' }}>
-    <rect width="100" height="100" rx="20" fill="rgba(2,6,23,0.8)" stroke="#00e5ff" strokeWidth="4"/>
+  <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: 'drop-shadow(0px 0px 8px rgba(0,229,255,0.6))' }}>
+    <rect width="100" height="100" rx="20" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" strokeWidth="1"/>
     <path d="M30 70 V30 L70 70 V30" stroke="#00e5ff" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
@@ -117,10 +117,10 @@ const SCENARIOS = {
 const getAgentColor = (agentName) => {
   if (!agentName) return '#94a3b8';
   const name = agentName.toUpperCase();
-  if (name.includes('SCANNER')) return '#38bdf8';
-  if (name.includes('BLUE')) return '#00e5ff';
-  if (name.includes('RED')) return '#ff1744';
-  if (name.includes('GATE') || name.includes('DEPLOY')) return '#0ea5e9';
+  if (name.includes('SCANNER')) return '#d500f9';  // Purple
+  if (name.includes('BLUE')) return '#00e5ff';     // Cyan
+  if (name.includes('RED')) return '#ff1744';      // Red
+  if (name.includes('GATE') || name.includes('DEPLOY')) return '#00e676'; // Green
   return '#94a3b8';
 };
 
@@ -311,7 +311,7 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
           <div style={{ margin: '0 20px', padding: '20px', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', background: 'rgba(2,6,23,0.5)', boxShadow: 'inset 0 0 20px rgba(0,229,255,0.08)' }}>
             <div style={{ fontSize: '0.65rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', marginBottom: '16px' }}>Active ADK Agents</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#38bdf8', textShadow: '0 0 10px rgba(56,189,248,0.7)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#d500f9', textShadow: '0 0 10px rgba(213,0,249,0.7)' }}>
                 <Icons.Radar /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Scanner</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#00e5ff', textShadow: '0 0 10px rgba(0,229,255,0.7)' }}>
@@ -320,7 +320,7 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#ff1744', textShadow: '0 0 10px rgba(255,23,68,0.7)' }}>
                 <Icons.Crosshair /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Red Team</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#0ea5e9', textShadow: '0 0 10px rgba(14,165,233,0.7)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#00e676', textShadow: '0 0 10px rgba(0,230,118,0.7)' }}>
                 <Icons.Lock /><span style={{ fontSize: '0.85rem', fontWeight: '600' }}>Deploy Gate</span>
               </div>
             </div>
@@ -421,11 +421,11 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
                   </div>
                   <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(2,6,23,0.5)', border: '1px solid rgba(255,255,255,0.06)' }}>
                     <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Red Team Bypasses</div>
-                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#00e5ff', textShadow: '0 0 10px rgba(0,229,255,0.5)' }}>0</div>
+                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#00e676', textShadow: '0 0 10px rgba(0,230,118,0.5)' }}>0</div>
                   </div>
                   <div style={{ padding: '24px', borderRadius: '12px', background: 'rgba(2,6,23,0.5)', border: '1px solid rgba(255,255,255,0.06)' }}>
                     <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Fleet Compliance Status</div>
-                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#38bdf8', textShadow: '0 0 10px rgba(56,189,248,0.5)' }}>100% SECURE</div>
+                    <div style={{ fontSize: '2rem', fontWeight: '700', fontFamily: 'Fira Code', color: '#00e5ff', textShadow: '0 0 10px rgba(0,229,255,0.5)' }}>100% SECURE</div>
                   </div>
                 </div>
 
@@ -454,7 +454,7 @@ APPROVED BY: AUTONOMOUS ZERO-TRUST DEPLOY GATE
                           <span style={{ padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold', background: `${row.color}22`, color: row.color, border: `1px solid ${row.color}55` }}>{row.severity}</span>
                         </td>
                         <td style={{ padding: '16px' }}>
-                          <span style={{ padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold', background: 'rgba(0, 229, 255, 0.15)', color: '#00e5ff', border: '1px solid rgba(0, 229, 255, 0.3)' }}>PATCHED VIA ADK</span>
+                          <span style={{ padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold', background: 'rgba(0, 230, 118, 0.15)', color: '#00e676', border: '1px solid rgba(0, 230, 118, 0.3)' }}>PATCHED VIA ADK</span>
                         </td>
                       </tr>
                     ))}
