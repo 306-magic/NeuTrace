@@ -35,10 +35,3 @@ Instead of relying on a single LLM to guess vulnerabilities, NeuTrace deploys an
 - **AI & Orchestration:** Google Agent Development Kit, Google Gemini (1.5 Pro/Flash)
 - **Cloud Security Integrations:** GCP Secret Manager, GCP Data Loss Prevention (DLP)
 
-## 💻 Getting Started (Local Development)
-
-To run NeuTrace locally on your machine:
-
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/YourUsername/neutrace.git](https://github.com/YourUsername/neutrace.git)
