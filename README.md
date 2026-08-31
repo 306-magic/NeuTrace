@@ -57,4 +57,8 @@ Follow these step-by-step instructions to clone, configure, and reproduce the Ne
 ### 1. Clone the Repository
 ```bash
 git clone [https://github.com/306-magic/NeuTrace.git](https://github.com/306-magic/NeuTrace.git)
+<<<<<<< HEAD
 cd NeuTrace
+=======
+cd NeuTrace
+>>>>>>> 8f1a5486a81442fe8062f08e24947b296e73ff90
