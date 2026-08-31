@@ -6,7 +6,7 @@
 ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
 > **Built for the All Things Agentic Hackathon**  
-> **Live Demo:** [Insert your Vercel URL here]
+> **Live Demo:** neu-trace.vercel.app
 
 As enterprise AI adoption explodes, the speed of software development has fundamentally outpaced traditional security. We are entering the "Agentic Era," where AI generates and deploys code at unprecedented velocity. Yet, CI/CD security remains archaic—relying on static rules and manual human review.
 
